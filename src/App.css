@@ -36,3 +36,18 @@
     transform: rotate(360deg);
   }
 }
+
+.card-product{
+  height: 350px;
+  width:270px
+}
+
+.navbar-nav > li{
+  margin-left:10px;
+  margin-right:10px;
+}
+
+.round-bottom{
+  border-bottom-right-radius: 20px;
+  border-bottom-left-radius: 20px;
+}
