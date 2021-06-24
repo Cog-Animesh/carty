@@ -1,4 +1,5 @@
 const express = require('express');
+require('dotenv').config()
 const app = express();
 const port = 8081;
 const path = require('path')
@@ -15,7 +16,7 @@ app.use('/admin',adminApi);
 app.use('/cart',cartApi);
 
 const mongoClient = require('mongodb').MongoClient;
-const dbUrl = "mongodb+srv://ani:ani@Mongo@cluster0.kjvvk.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
+const dbUrl = process.env.DB_URL;
 let databaseObj;
 
 
