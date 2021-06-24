@@ -6,11 +6,13 @@ const path = require('path')
 const userApi = require("./Apis/UserApi");
 const productApi = require("./Apis/ProductApi");
 const adminApi = require('./Apis/AdminApi');
+const cartApi = require('./Apis/CartApi');
 
 app.use(express.static(path.join(__dirname,'./build/')))
 app.use('/user',userApi);
 app.use('/product',productApi);
 app.use('/admin',adminApi);
+app.use('/cart',cartApi);
 
 const mongoClient = require('mongodb').MongoClient;
 const dbUrl = "mongodb+srv://ani:ani@Mongo@cluster0.kjvvk.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";

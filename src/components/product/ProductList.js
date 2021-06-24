@@ -1,25 +1,23 @@
 import axios from "axios";
 import { useState } from "react";
 import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { bindActionCreators } from "redux";
+import ActionCreator from "../../store/ActionCreator";
 import Product from "./Product";
 
 function ProductList() {
     let [productItem, setProductItem] = useState({ arr: [] });
+    const store = useSelector(store => store.cartReducer);
+    console.log('cartReducer ',store);
+    const dispatch = useDispatch();
+    const {addItem,removeItem} = bindActionCreators(ActionCreator,dispatch);
 
     useEffect(() => {
         axios.get("/product/read")
             .then(products => {
-                console.log(products.data)
-                console.log(Array.isArray(products.data))
                 let ar = products.data
-                console.log(ar)
-
-                console.log(productItem.arr)
                 setProductItem({ arr: ar })
-                console.log(productItem)
-                console.log(productItem.arr)
-
-
             })
             .catch(err => console.log(err.message))
     }, [])
@@ -37,7 +35,7 @@ function ProductList() {
                         :
                         productItem.arr.map((ele, ind) => {
                             return (<div className="col">
-                                <Product key={ind} data={ele}></Product>
+                                <Product key={ind} data={ele} addItem={addItem} removeItem={removeItem}></Product>
                             </div>)
                         })
 

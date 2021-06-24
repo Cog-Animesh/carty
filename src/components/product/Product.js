@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useEffect } from "react";
 import { useState } from "react";
 
@@ -10,6 +11,21 @@ function Product(props) {
             setRole(localStorage.role)
         }
     })
+
+    const addItem = (obj) => {
+        let username = JSON.parse(localStorage.getItem('user')).username;
+        let products = []
+        obj.qty = 1;
+        products.push(obj)
+        axios.post('/cart/add', { username: username, products: products })
+            .then(function (res) {
+                if (res.data.status === "success") {
+                    console.log(JSON.stringify(res.data.data))
+                    props.addItem(obj);
+                }
+                alert(res.data.message)
+            })
+    }
 
     function isUser() {
         return role === 'user' ? true : false;
@@ -30,7 +46,7 @@ function Product(props) {
                         <p className="card-text">Price:{item.price}</p>
                     </div>
                     <div className="d-flex flex-column">
-                        {isUser() && <button className="btn btn-success">Add to Cart</button>}
+                        {isUser() && <button className="btn btn-success" onClick={() => addItem(item)}>Add to Cart</button>}
                         {isAdmin() && <button className="btn btn-danger">Delete</button>}
                         {isAdmin() && <button className="btn btn-outline-danger mt-2">Edit</button>}
                     </div>
