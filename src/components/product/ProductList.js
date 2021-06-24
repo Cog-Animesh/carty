@@ -8,10 +8,42 @@ import Product from "./Product";
 
 function ProductList() {
     let [productItem, setProductItem] = useState({ arr: [] });
-    const store = useSelector(store => store.cartReducer);
-    console.log('cartReducer ',store);
+    let [cartItemState, setCartItemState] = useState([]);
+
     const dispatch = useDispatch();
-    const {addItem,removeItem} = bindActionCreators(ActionCreator,dispatch);
+    const { addItem, removeItem } = bindActionCreators(ActionCreator, dispatch);
+
+    const addItemInCart = (obj) => {
+        // obj.qty = 1;
+        // let flag = true;
+        let username = JSON.parse(localStorage.getItem('user')).username;
+        console.log(obj)
+        // cartItemState.arr.forEach((ele, ind) => {
+        //     if (ele.pid === obj.pid) {
+        //         ele.qty += 1;
+        //         cartItemState.arr.splice(ind, 1, ele);
+        //         cartItemState.arr = [...cartItemState.arr.slice(0, ind), ele, ...cartItemState.arr.slice(ind + 1)]
+        //         flag = false;
+        //     }
+        // })
+        // if(flag){
+        //     setCartItemState({arr:[...cartItemState.arr,obj]})
+        // }
+        // console.log(cartItemState)
+        axios.post('/cart/add', { username: username, products: obj })
+            .then(function (res) {
+                if (res.data.status === "success") {
+                    console.log(JSON.stringify(res.data.data))
+                    //setCartItemState([...cartItemState,obj])
+                   // console.log(cartItemState)
+                   alert(res.data.message)
+                }
+            })
+    }
+
+    const removeItemInCart = () => {
+
+    }
 
     useEffect(() => {
         axios.get("/product/read")
@@ -35,7 +67,7 @@ function ProductList() {
                         :
                         productItem.arr.map((ele, ind) => {
                             return (<div className="col">
-                                <Product key={ind} data={ele} addItem={addItem} removeItem={removeItem}></Product>
+                                <Product key={ind} data={ele} addItem={addItemInCart} removeItem={removeItemInCart}></Product>
                             </div>)
                         })
 

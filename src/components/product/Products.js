@@ -1,23 +1,39 @@
+import { useEffect, useState } from "react";
 import { useRouteMatch } from "react-router-dom";
 import { BrowserRouter, Switch, Link, Route } from 'react-router-dom';
 import AddProduct from "./AddProduct";
 import ProductList from "./ProductList";
+import Cart from '../Cart'
 
 function Products() {
   let { path, url } = useRouteMatch();
+  let [role, setRole] = useState(null)
+
+  useEffect(() => {
+    if (localStorage.role) {
+      setRole(localStorage.role)
+    }
+  })
+
+  function isUser() {
+    return role === 'user' ? false : true;
+  }
+
+  function isAdmin() {
+    return role === 'admin' ? false : true;
+  }
+
   return (
     <div>
-      <div className="d-flex justify-content-center">
-        <div className="navbar navbar-expand-sm navbar-dark bg-dark w-25 round-bottom">
-          <ul className="navbar-nav">
-            <li className="nav-item ms-4">
-              <Link className="nav-link fs-5" to={`${url}/addproduct`}>Add Product</Link>
-            </li>
-
-            <li className="nav-item">
-              <Link className="nav-link fs-5" to={`${url}/productlist`}>Product List</Link>
-            </li>
-          </ul>
+      <div className="d-flex justify-content-around">
+        <div className="nav-item ms-4" hidden={isAdmin()}>
+          <Link className="nav-link fs-5" to={`${url}/addproduct`}>Add Product</Link>
+        </div>
+        <div className="nav-item ms-4" hidden={isUser()}>
+          <Link className="nav-link fs-5" to={`${url}/cart`}>Cart</Link>
+        </div>
+        <div className="nav-item">
+          <Link className="nav-link fs-5" to={`${url}/productlist`}>Product List</Link>
         </div>
       </div>
       <Switch>
@@ -27,9 +43,13 @@ function Products() {
         <Route path={`${path}/productlist`}>
           <ProductList />
         </Route>
+        <Route path={`${path}/cart`}>
+          <Cart />
+        </Route>
       </Switch>
     </div>
   )
+
 }
 
 {/* <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">

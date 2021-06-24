@@ -48,9 +48,9 @@ function App() {
           <a class="navbar-brand fs-3 ms-3" href="#">Carty</a>
           <ul className="navbar-nav ms-auto">
             <li className="nav-item">
-              <Link className="nav-link fs-5" to="/products" hidden={!loginStatus}>Products</Link>
+              <Link className="nav-link fs-5" to="/products"  hidden={true}>Products</Link>
             </li>
-            <li className="nav-item">
+            <li className="nav-item" hidden={true}>
               <button className="btn btn-success" >Cart
                 <span className="badge bg-warning text-dark ms-2 me-2">{getCartItemCount()}</span></button>
             </li>
