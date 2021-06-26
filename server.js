@@ -1,7 +1,7 @@
 const express = require('express');
 require('dotenv').config()
 const app = express();
-const port = 8081;
+const port = process.env.PORT || 8080;
 const path = require('path')
 
 const userApi = require("./Apis/UserApi");
@@ -61,4 +61,4 @@ app.use((err,req,res,next)=>{
 //app.use("/product",productApi);
 
 
-app.listen(port,()=>{console.log("listening on 8081")})
+app.listen(port,()=>{console.log("listening on 8080")})

@@ -24,7 +24,7 @@ function Login() {
                     localStorage.setItem('role',role);
                     localStorage.setItem('token', res.data.token);
                     localStorage.setItem('user', JSON.stringify(res.data.data))
-                    history.push(`/userprofile/${obj.username}`)
+                    history.push(`/userprofile/productlist`)
                 }
                 alert(res.data.message)
                 console.log(res.data.token)

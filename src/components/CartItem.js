@@ -1,5 +1,5 @@
 function CartItem(props) {
-    console.log(props)
+  //  console.log(props)
     let ele = props.data;
     return (
         <div className="w-75 ms-5">

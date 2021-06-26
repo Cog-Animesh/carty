@@ -2,13 +2,15 @@ import axios from "axios";
 import { useState } from "react";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 import { bindActionCreators } from "redux";
 import ActionCreator from "../../store/ActionCreator";
 import Product from "./Product";
 
-function ProductList() {
+function ProductList(props) {
     let [productItem, setProductItem] = useState({ arr: [] });
     let [cartItemState, setCartItemState] = useState([]);
+    let history  = useHistory();
 
     const dispatch = useDispatch();
     const { addItem, removeItem } = bindActionCreators(ActionCreator, dispatch);
@@ -36,7 +38,9 @@ function ProductList() {
                     console.log(JSON.stringify(res.data.data))
                     //setCartItemState([...cartItemState,obj])
                    // console.log(cartItemState)
+                   props.cnt(ds => ds+1)
                    alert(res.data.message)
+                   history.push('/userprofile/cart')
                 }
             })
     }
