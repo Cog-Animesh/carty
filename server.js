@@ -3,13 +3,13 @@ require('dotenv').config()
 const app = express();
 const port = process.env.PORT || 8080;
 const path = require('path')
+app.use(express.static(path.join(__dirname,'./build/')))
 
 const userApi = require("./Apis/UserApi");
 const productApi = require("./Apis/ProductApi");
 const adminApi = require('./Apis/AdminApi');
 const cartApi = require('./Apis/CartApi');
 
-app.use(express.static(path.join(__dirname,'./build/')))
 app.use('/user',userApi);
 app.use('/product',productApi);
 app.use('/admin',adminApi);
