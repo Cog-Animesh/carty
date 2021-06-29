@@ -9,7 +9,7 @@ const userAuth = async (req, res, next) => {
     if (user !== null) {
         let hPass = await bcrypt.compare(creds.password, user.password)
         if (hPass) {
-            let token = await jwt.sign({ username: user.username }, 'abcdef', { expiresIn: 120 })
+            let token = await jwt.sign({ username: user.username }, process.env.JWT_KEY, { expiresIn: 120 })
             delete user.password;
             res.locals.token = token;
             res.locals.user = user;
